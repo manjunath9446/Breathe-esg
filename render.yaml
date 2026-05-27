@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: breathe-esg-api
+    env: python
+    buildCommand: "pip install -r backend/requirements.txt && python backend/manage.py migrate"
+    startCommand: "gunicorn core.wsgi:application --bind 0.0.0.0:$PORT"
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: REDIS_URL
+        sync: false
+
+  - type: worker
+    name: breathe-esg-celery
+    env: python
+    buildCommand: "pip install -r backend/requirements.txt"
+    startCommand: "celery -A core worker -l info"
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: REDIS_URL
+        sync: false
