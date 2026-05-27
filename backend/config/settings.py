@@ -6,6 +6,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-dnbo72aox4a%l4fzuhp)+6z!^^re%@5v%vbh)2h(@mjjqq*g_6"
 
 DEBUG = True
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+STATIC_URL = "/static/"
 
 ALLOWED_HOSTS = []
 import os
@@ -41,6 +44,7 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 
     "simple_history.middleware.HistoryRequestMiddleware",
 
