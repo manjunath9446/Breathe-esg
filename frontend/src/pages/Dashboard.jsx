@@ -46,7 +46,7 @@ export default function Dashboard() {
     try {
 
       const response = await axios.get(
-        "http://127.0.0.1:8000/api/emissions/"
+        "https://breathe-esg-1-v1zk.onrender.com/api/emissions/"
       );
 
       console.log(response.data);
