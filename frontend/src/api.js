@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL:
+    "https://breathe-esg-1-v1zk.onrender.com",
 });
 
 export default api;
