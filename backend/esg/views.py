@@ -19,9 +19,7 @@ from .tasks import (
 )
 
 
-class IngestionBatchViewSet(
-    viewsets.ModelViewSet
-):
+class IngestionBatchViewSet(viewsets.ModelViewSet):
 
     queryset = IngestionBatch.objects.all().order_by(
         "-created_at"
@@ -34,24 +32,32 @@ class IngestionBatchViewSet(
 
     def create(self, request, *args, **kwargs):
 
-    serializer = self.get_serializer(
-        data=request.data
-    )
+        serializer = self.get_serializer(
+            data=request.data
+        )
 
-    serializer.is_valid(
-        raise_exception=True
-    )
+        serializer.is_valid(
+            raise_exception=True
+        )
 
-    batch = serializer.save()
+        batch = serializer.save()
 
-    # TEMPORARY DEMO FIX
-    batch.status = "COMPLETED"
-    batch.save()
+        if batch.source_system == "SAP":
 
-    return Response({
-        "message": "Batch uploaded successfully",
-        "batch_id": batch.id
-    })
+            process_sap_csv.delay(
+                batch.id
+            )
+
+        elif batch.source_system == "UTILITY":
+
+            process_utility_pdf.delay(
+                batch.id
+            )
+
+        return Response({
+            "message": "Batch uploaded successfully",
+            "batch_id": batch.id
+        })
 
 
 class EmissionRecordViewSet(
