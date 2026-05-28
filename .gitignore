@@ -20,8 +20,7 @@ media/
 staticfiles/
 
 # Migrations
-**/migrations/*.py
-!**/migrations/__init__.py
+
 
 # Environment variables
 .env
