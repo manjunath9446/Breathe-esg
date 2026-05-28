@@ -38,8 +38,8 @@ export default function Upload() {
       console.log("Payload:", payload);
 
       const response = await api.post(
-        "/batches/",
-        payload
+      "/batches/",
+      payload
       );
 
       console.log(response.data);

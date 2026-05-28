@@ -46,7 +46,7 @@ export default function Dashboard() {
 
     try {
 
-      const response = await api.get("/api/emissions/");
+      const response = await api.get("/emissions/");
 
       console.log(response.data);
 
