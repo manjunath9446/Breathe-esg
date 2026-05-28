@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 
 import axios from "axios";
+import api from "../api";
 
 import {
   BarChart,
@@ -45,9 +46,7 @@ export default function Dashboard() {
 
     try {
 
-      const response = await axios.get(
-        "https://breathe-esg-1-v1zk.onrender.com/api/emissions/"
-      );
+      const response = await api.get("/api/emissions/");
 
       console.log(response.data);
 
