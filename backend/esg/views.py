@@ -19,7 +19,9 @@ from .tasks import (
 )
 
 
-class IngestionBatchViewSet(viewsets.ModelViewSet):
+class IngestionBatchViewSet(
+    viewsets.ModelViewSet
+):
 
     queryset = IngestionBatch.objects.all().order_by(
         "-created_at"
@@ -42,15 +44,16 @@ class IngestionBatchViewSet(viewsets.ModelViewSet):
 
         batch = serializer.save()
 
+        # RUN DIRECTLY WITHOUT CELERY
         if batch.source_system == "SAP":
 
-            process_sap_csv.delay(
+            process_sap_csv(
                 batch.id
             )
 
         elif batch.source_system == "UTILITY":
 
-            process_utility_pdf.delay(
+            process_utility_pdf(
                 batch.id
             )
 
